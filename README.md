@@ -1,21 +1,7 @@
-# Docker — Volumes & Networks  
-Exercices de persistance et de réseau (niveau débutant)
-
-Ce README résume **pas à pas** les manipulations réalisées dans les **exercices 1 et 2**, afin de comprendre :
-- la **persistance des données** avec les volumes
-- la **communication réseau** entre conteneurs Docker
-
+# Docker — Volumes + Networks  
 ---
 
-## 🧪 Exercice 1 — Persistance des données avec les volumes
-
-### 🎯 Objectif
-Comprendre pourquoi les données disparaissent quand un conteneur est supprimé,  
-et comment **les volumes Docker permettent de persister ces données**.
-
-> Idée clé du cours :  
-> Le *writable layer* d’un conteneur est **éphémère**.  
-> **Les volumes** sont le mécanisme recommandé pour stocker des données persistantes.
+## Ex 1 — Persistance des données avec les volumes
 
 ---
 
@@ -52,7 +38,7 @@ docker run --rm \
 
 
 
-## 🧪 Exercice 2
+## Ex 2
 docker network create mynet
 docker network ls
 
@@ -76,7 +62,7 @@ curl http://web
 
 
 
-# Docker — Volumes & Networks  
+# Docker — Volumes + Networks  
 Cours + Exercices + Questions (niveau débutant)
 
 Ce document regroupe :
@@ -88,19 +74,16 @@ Objectif : comprendre **la persistance des données** et **la communication rés
 
 ---
 
-## 🔹 Volumes et Networks — Notions clés
 
-### Pourquoi les volumes ?
-
-**Idée clé :**  
+**Idée :**  
 Le *writable layer* d’un conteneur **disparaît quand le conteneur est supprimé**.
 
-👉 Sans volume :
+Sans volume :
 - l’image existe
 - le conteneur tourne
 - **les données sont perdues à l’arrêt**
 
-👉 Avec un volume :
+Avec un volume :
 - les données sont **séparées du conteneur**
 - elles **persistent**
 - elles peuvent être **sauvegardées, restaurées, migrées**
@@ -113,7 +96,7 @@ Les volumes sont le mécanisme recommandé pour :
 
 ---
 
-## 🔹 Choisir le bon type de montage
+## Type de montage
 
 ### Volume (named)
 - Géré par Docker (`/var/lib/docker/...`)
@@ -121,12 +104,11 @@ Les volumes sont le mécanisme recommandé pour :
 - Persistant
 - Facile à sauvegarder / migrer
 - Partageable entre conteneurs
-- 👉 **Recommandé en production**
 
 ### Bind mount (host)
 - Monte un chemin exact du host dans le conteneur
 - Dépend de l’OS et du filesystem
-- Idéal pour le dev (code live)
+- Pour le dev
 - Risque d’exposer trop de fichiers du host
 
 ### tmpfs
@@ -137,21 +119,7 @@ Les volumes sont le mécanisme recommandé pour :
 
 ---
 
-### Tableau comparatif
-
-| Critère | Volume (named) | Bind mount | tmpfs |
-|------|----------------|-----------|-------|
-| Géré par Docker | ✅ | ❌ | ✅ |
-| Stockage | Disque Docker | Disque host | RAM |
-| Persistance | ✅ | ✅ | ❌ |
-| Dépendance OS | ❌ | ✅ | ❌ |
-| Sécurité | ✅ | ⚠️ | 🔒 |
-| Performance | ✅ | ⚠️ | 🚀 |
-| Usage | Prod / DB | Dev / code | Secrets |
-
----
-
-## 🔹 Cycle de vie des volumes
+## Cycle volumes
 
 **CRÉER → MONTER → INSPECTER → BACKUP → NETTOYER**
 
